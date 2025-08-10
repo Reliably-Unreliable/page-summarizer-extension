@@ -32,7 +32,7 @@ if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY is required")
 
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemma-3n-e4b-it')
 
 class SummarizeRequest(BaseModel):
     title: str
