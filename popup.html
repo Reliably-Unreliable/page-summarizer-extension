@@ -70,6 +70,51 @@
     .hidden {
       display: none;
     }
+    
+    .api-key-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    
+    .api-key-input {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    #apiKeyInput {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    
+    #saveApiKeyBtn {
+      background-color: #34a853;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    #saveApiKeyBtn:hover {
+      background-color: #2d8a47;
+    }
+    
+    .api-key-help {
+      text-align: center;
+    }
+    
+    .api-key-help a {
+      color: #4285f4;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -77,6 +122,16 @@
     <h1>Page Summarizer</h1>
   </div>
   
+  <div id="apiKeySection" class="api-key-section">
+    <div class="api-key-input">
+      <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API key">
+      <button id="saveApiKeyBtn">Save</button>
+    </div>
+    <div class="api-key-help">
+      <small><a href="https://aistudio.google.com/" target="_blank">Get API key from Google AI Studio</a></small>
+    </div>
+  </div>
+
   <div class="button-container">
     <button id="summarizeBtn">Summarize This Page</button>
   </div>

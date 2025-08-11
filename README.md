@@ -9,69 +9,40 @@ A Chrome extension that uses Google's Gemini AI to summarize web page content. S
 - 🤖 AI-powered page summarization using Google Gemini
 - 🚀 Fast and efficient content extraction
 - 🎨 Clean, user-friendly interface
-- 🔒 Privacy-focused (content only sent to your backend)
+- 🔒 Privacy-focused (content sent directly to Google's Gemini API)
 - 📱 Works on any webpage
+- 🔑 Secure API key storage using Chrome's storage API
 
 ## Architecture
 
 - **Frontend**: Chrome Extension (JavaScript, HTML, CSS)
-- **Backend**: Python FastAPI server with Gemini AI integration
-- **AI Model**: Google Gemini 1.5 Flash
+- **AI Model**: Gemma 3n E4B IT (called directly via REST API)
 
 ## Setup Instructions
 
-### 1. Backend Setup
-
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-
-2. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Create environment file:
-   ```bash
-   cp env.example .env
-   ```
-
-4. Edit `.env` and add your Gemini API key:
-   ```
-   GEMINI_API_KEY=your_actual_api_key_here
-   ```
-
-5. Start the backend server:
-   ```bash
-   python start.py
-   ```
-
-   The server will start at `http://localhost:8000`
-
-### 2. Chrome Extension Setup
-
-1. Open Chrome and go to `chrome://extensions/`
-
-2. Enable "Developer mode" (toggle in top right)
-
-3. Click "Load unpacked" and select the extension folder (not the backend folder)
-
-4. The extension should now appear in your Chrome toolbar
-
-### 3. Getting Gemini API Key
+### 1. Get Your Gemini API Key
 
 1. Go to [Google AI Studio](https://aistudio.google.com/)
 2. Sign in with your Google account
 3. Click "Get API Key"
 4. Create a new API key
-5. Copy the API key to your `.env` file
+5. Copy the API key (you'll enter it in the extension)
+
+### 2. Install Chrome Extension
+
+1. Open Chrome and go to `chrome://extensions/`
+
+2. Enable "Developer mode" (toggle in top right)
+
+3. Click "Load unpacked" and select the extension folder
+
+4. The extension should now appear in your Chrome toolbar
 
 ## Usage
 
-1. Make sure the backend server is running (`python backend/start.py`)
-2. Navigate to any webpage you want to summarize
-3. Click the Page Summarizer extension icon in the Chrome toolbar
+1. Navigate to any webpage you want to summarize
+2. Click the Page Summarizer extension icon in the Chrome toolbar
+3. If this is your first time using the extension, enter your Gemini API key and click "Save"
 4. Click "Summarize This Page"
 5. Wait for the AI to generate a summary
 6. Read the summary in the popup
@@ -82,40 +53,30 @@ A Chrome extension that uses Google's Gemini AI to summarize web page content. S
 page-summarizer-extension/
 ├── manifest.json          # Chrome extension manifest
 ├── popup.html             # Extension popup UI
-├── popup.js              # Popup functionality
+├── popup.js              # Popup functionality and Gemini API integration
 ├── content.js            # Content extraction script
-├── backend/
-│   ├── main.py           # FastAPI backend server
-│   ├── start.py          # Server startup script
-│   ├── requirements.txt  # Python dependencies
-│   ├── .env             # Environment variables (create from env.example)
-│   └── env.example      # Environment template
+├── icons/                # Extension icons
 └── README.md            # This file
 ```
 
-## API Endpoints
-
-- `GET /` - API status
-- `GET /health` - Health check
-- `POST /summarize` - Summarize page content
-
 ## Troubleshooting
 
-### Backend Issues
-- **"GEMINI_API_KEY not found"**: Make sure you created `.env` file with your API key
-- **"Port 8000 already in use"**: Kill existing processes or change port in `start.py`
-- **API errors**: Check your Gemini API key is valid and has quota remaining
+### API Issues
+- **"API key not found"**: Make sure you entered your Gemini API key in the extension
+- **"API Error: 400"**: Check your Gemini API key is valid and correctly entered
+- **"API Error: 403"**: Your API key may be invalid or quota exceeded
+- **"API Error: 429"**: You've exceeded the API rate limit, wait a moment and try again
 
 ### Extension Issues
-- **Extension not loading**: Make sure you're loading the root folder, not the backend folder
-- **"Failed to extract content"**: Some pages may block content scripts - try refreshing
-- **Connection refused**: Make sure backend server is running at `http://localhost:8000`
+- **Extension not loading**: Make sure you're loading the root folder in Chrome extensions
+- **"Failed to extract content"**: Some pages may block content scripts - try refreshing the page
+- **No summary generated**: Check browser console for errors (F12 → Console)
 
 ### Common Fixes
-1. Restart the backend server
-2. Reload the Chrome extension
-3. Check browser console for errors (F12 → Console)
-4. Verify API key is correct and has quota
+1. Reload the Chrome extension (chrome://extensions/ → reload button)
+2. Check browser console for errors (F12 → Console)
+3. Verify your API key is correct and has remaining quota
+4. Try on a different webpage to test if it's page-specific
 
 ## Development
 
@@ -127,9 +88,10 @@ To modify the extension:
 
 ## Security Notes
 
-- Your API key is stored locally in the backend `.env` file
-- Page content is only sent to your local backend and then to Google's Gemini API
+- Your API key is stored locally using Chrome's secure storage API
+- Page content is sent directly to Google's Gemini API (no third-party servers)
 - No data is stored permanently by this application
+- API key is stored securely and only accessible by the extension
 
 ## License
 
