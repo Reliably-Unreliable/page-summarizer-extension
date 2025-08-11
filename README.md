@@ -1,5 +1,7 @@
 # Page Summarizer Chrome Extension
 
+*Last Updated: August 11, 2025*
+
 A Chrome extension that uses Google's Gemini AI to summarize web page content. Simply click the extension button on any webpage to get an AI-powered summary of the page content.
 
 ## Features
